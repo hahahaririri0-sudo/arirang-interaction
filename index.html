@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>Back to Us</title>
+
+  <style>
+    :root {
+      --page-width: 1100px;
+      --scene-width: 720px;
+      --scene-height: 310px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+      background: #ffffff;
+    }
+
+    body {
+      overflow-x: hidden;
+      color: #111111;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    img {
+      display: block;
+      height: auto;
+
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      padding: 40px 20px 60px;
+    }
+
+    .website-content {
+      width: min(100%, var(--page-width));
+      margin: 0 auto;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ========================================
+       LOGO
+    ======================================== */
+
+    .logo {
+      width: clamp(150px, 16vw, 220px);
+      max-width: 100%;
+      margin-bottom: 34px;
+    }
+
+    /* ========================================
+       INTERACTIVE AREA
+    ======================================== */
+
+    .interactive-area {
+      width: 100%;
+
+      display: flex;
+      justify-content: center;
+
+      margin-bottom: 28px;
+    }
+
+    .spill-stage {
+      position: relative;
+
+      width: min(92vw, var(--scene-width));
+      height: var(--scene-height);
+
+      isolation: isolate;
+    }
+
+    /* ========================================
+       SURFACE SHADOW
+    ======================================== */
+
+    .surface-shadow {
+      position: absolute;
+
+      left: 50%;
+      bottom: 42px;
+
+      width: 390px;
+      height: 34px;
+
+      z-index: 0;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          ellipse at center,
+          rgba(0, 0, 0, 0.11) 0%,
+          rgba(0, 0, 0, 0.05) 42%,
+          rgba(0, 0, 0, 0) 74%
+        );
+
+      opacity: 0;
+
+      transform:
+        translateX(-35%)
+        scaleX(0.55);
+
+      filter: blur(5px);
+
+      pointer-events: none;
+    }
+
+    .spill-stage.opened .surface-shadow {
+      animation:
+        shadowAppear
+        900ms
+        ease
+        300ms
+        forwards;
+    }
+
+    @keyframes shadowAppear {
+      from {
+        opacity: 0;
+
+        transform:
+          translateX(-35%)
+          scaleX(0.55);
+      }
+
+      to {
+        opacity: 1;
+
+        transform:
+          translateX(-22%)
+          scaleX(1);
+      }
+    }
+
+    /* ========================================
+       CONTAINER
+    ======================================== */
+
+    .container-stage {
+      position: absolute;
+
+      left: 105px;
+      top: 28px;
+
+      width: 68px;
+
+      z-index: 8;
+
+      cursor: pointer;
+      outline-offset: 8px;
+
+      transform-origin: center bottom;
+
+      animation:
+        containerIdle
+        4.8s
+        ease-in-out
+        infinite;
+    }
+
+    .container-stage.opened {
+      cursor: default;
+      animation: none;
+    }
+
+    @keyframes containerIdle {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-2px);
+      }
+    }
+
+    .container-image {
+      position: relative;
+
+      width: 100%;
+      max-width: none;
+
+      z-index: 8;
+
+      transform-origin: 73% 86%;
+
+      filter:
+        drop-shadow(
+          0 6px 5px rgba(0, 0, 0, 0.09)
+        );
+    }
+
+    .lid-image {
+      position: absolute;
+
+      left: 50%;
+      top: 0;
+
+      width: 100%;
+      max-width: none;
+
+      z-index: 9;
+
+      transform:
+        translateX(-50%)
+        translateY(1%);
+
+      transform-origin: 58% 70%;
+
+      filter:
+        drop-shadow(
+          0 3px 3px rgba(0, 0, 0, 0.08)
+        );
+    }
+
+    /* ========================================
+       CONTAINER FALL
+    ======================================== */
+
+    .container-stage.opened .container-image {
+      animation:
+        containerFall
+        1120ms
+        cubic-bezier(0.18, 0.72, 0.18, 1)
+        forwards;
+    }
+
+    @keyframes containerFall {
+      0% {
+        transform:
+          translateX(0)
+          translateY(0)
+          rotate(0deg);
+      }
+
+      18% {
+        transform:
+          translateX(7px)
+          translateY(2px)
+          rotate(10deg);
+      }
+
+      100% {
+        transform:
+          translateX(53px)
+          translateY(108px)
+          rotate(84deg);
+      }
+    }
+
+    /* ========================================
+       LID FALL
+    ======================================== */
+
+    .container-stage.opened .lid-image {
+      z-index: 1;
+
+      animation:
+        lidFall
+        1260ms
+        cubic-bezier(0.18, 0.7, 0.18, 1)
+        forwards;
+    }
+
+    @keyframes lidFall {
+      0% {
+        transform:
+          translateX(-50%)
+          translateY(1%)
+          rotate(0deg);
+      }
+
+      16% {
+        transform:
+          translateX(-42%)
+          translateY(-7%)
+          rotate(-7deg);
+      }
+
+      100% {
+        transform:
+          translateX(111px)
+          translateY(144px)
+          rotate(28deg);
+      }
+    }
+
+    /* ========================================
+       CONTENTS REVEAL
+
+       This entire layer is above the container.
+       It begins near the middle-right area of the
+       horizontally fallen container.
+    ======================================== */
+
+    .contents-reveal {
+      position: absolute;
+
+      left: 220px;
+      top: 133px;
+
+      width: 445px;
+      height: 165px;
+
+      z-index: 11;
+
+      overflow: hidden;
+      pointer-events: none;
+
+      clip-path:
+        inset(
+          0
+          100%
+          0
+          0
+        );
+
+      /*
+        This mask creates the soft left-to-right
+        opacity reveal at the opening.
+      */
+
+      -webkit-mask-image:
+        linear-gradient(
+          to right,
+          transparent 0,
+          rgba(0, 0, 0, 0.18) 14px,
+          rgba(0, 0, 0, 0.55) 30px,
+          #000000 52px,
+          #000000 100%
+        );
+
+      mask-image:
+        linear-gradient(
+          to right,
+          transparent 0,
+          rgba(0, 0, 0, 0.18) 14px,
+          rgba(0, 0, 0, 0.55) 30px,
+          #000000 52px,
+          #000000 100%
+        );
+
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+
+      -webkit-mask-size: 100% 100%;
+      mask-size: 100% 100%;
+    }
+
+    .spill-stage.opened .contents-reveal {
+      animation:
+        revealOpening
+        850ms
+        cubic-bezier(0.22, 0.7, 0.25, 1)
+        850ms
+        forwards;
+    }
+
+    @keyframes revealOpening {
+      0% {
+        clip-path:
+          inset(
+            0
+            100%
+            0
+            0
+          );
+      }
+
+      100% {
+        clip-path:
+          inset(
+            0
+            0
+            0
+            0
+          );
+      }
+    }
+
+    /* ========================================
+       OPENING SHADOW
+    ======================================== */
+
+    .opening-shadow {
+      position: absolute;
+
+      left: 18px;
+      top: 67px;
+
+      width: 46px;
+      height: 58px;
+
+      z-index: 11;
+
+      border-radius:
+        48%
+        18%
+        18%
+        48%;
+
+      background:
+        radial-gradient(
+          ellipse at left center,
+          rgba(0, 0, 0, 0.22) 0%,
+          rgba(0, 0, 0, 0.1) 40%,
+          rgba(0, 0, 0, 0) 74%
+        );
+
+      opacity: 0;
+
+      filter: blur(2px);
+
+      pointer-events: none;
+    }
+
+    .spill-stage.opened .opening-shadow {
+      animation:
+        openingShadowAppear
+        250ms
+        ease
+        820ms
+        forwards;
+    }
+
+    @keyframes openingShadowAppear {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 0.78;
+      }
+    }
+
+    /* ========================================
+       WAX CYLINDER
+
+       The cylinder is above the container.
+       Its opacity gradually increases while
+       moving through the masked opening.
+    ======================================== */
+
+    .wax-cylinder {
+      position: absolute;
+
+      left: -38px;
+      top: 26px;
+
+      width: 215px;
+      max-width: none;
+
+      z-index: 12;
+
+      opacity: 0;
+
+      transform:
+        translateX(0)
+        translateY(0)
+        rotate(-7deg)
+        scale(0.95);
+
+      transform-origin: center;
+
+      filter:
+        drop-shadow(
+          0 7px 5px rgba(0, 0, 0, 0.12)
+        );
+
+      pointer-events: none;
+    }
+
+    .spill-stage.opened .wax-cylinder {
+      animation:
+        waxEmerge
+        800ms
+        cubic-bezier(0.22, 0.7, 0.25, 1)
+        900ms
+        forwards;
+    }
+
+    @keyframes waxEmerge {
+      0% {
+        opacity: 0;
+
+        transform:
+          translateX(0)
+          translateY(0)
+          rotate(-7deg)
+          scale(0.95);
+      }
+
+      15% {
+        opacity: 0.16;
+      }
+
+      35% {
+        opacity: 0.52;
+      }
+
+      60% {
+        opacity: 0.88;
+      }
+
+      100% {
+        opacity: 1;
+
+        transform:
+          translateX(147px)
+          translateY(27px)
+          rotate(6deg)
+          scale(1);
+      }
+    }
+
+    /* ========================================
+       ROLLED PAPER
+
+       The paper is above the cylinder.
+       It begins inside the cylinder's hollow
+       area and emerges toward the right.
+    ======================================== */
+
+    .rolled-paper {
+      position: absolute;
+
+      left: 55px;
+      top: 54px;
+
+      width: 130px;
+      max-width: none;
+
+      z-index: 13;
+
+      opacity: 0;
+
+      transform:
+        translateX(0)
+        translateY(0)
+        rotate(-8deg)
+        scale(0.82);
+
+      transform-origin: center;
+
+      filter:
+        drop-shadow(
+          0 5px 4px rgba(0, 0, 0, 0.11)
+        );
+
+      pointer-events: none;
+    }
+
+    .spill-stage.opened .rolled-paper {
+      animation:
+        paperEmerge
+        720ms
+        cubic-bezier(0.22, 0.7, 0.25, 1)
+        1050ms
+        forwards;
+    }
+
+    @keyframes paperEmerge {
+      0% {
+        opacity: 0;
+
+        transform:
+          translateX(0)
+          translateY(0)
+          rotate(-8deg)
+          scale(0.82);
+      }
+
+      15% {
+        opacity: 0.12;
+      }
+
+      35% {
+        opacity: 0.45;
+      }
+
+      60% {
+        opacity: 0.84;
+      }
+
+      100% {
+        opacity: 1;
+
+        transform:
+          translateX(198px)
+          translateY(19px)
+          rotate(9deg)
+          scale(1);
+      }
+    }
+
+    /* ========================================
+       PAPER CLICK TARGET
+    ======================================== */
+
+    .paper-click-target {
+      position: absolute;
+
+      left: 470px;
+      top: 202px;
+
+      width: 140px;
+      height: 85px;
+
+      z-index: 14;
+
+      cursor: pointer;
+
+      opacity: 0;
+      visibility: hidden;
+
+      transform: rotate(9deg);
+
+      border: 0;
+      padding: 0;
+      background: transparent;
+
+      outline-offset: 7px;
+    }
+
+    .spill-stage.opened .paper-click-target {
+      animation:
+        enablePaperClick
+        1ms
+        linear
+        2050ms
+        forwards;
+    }
+
+    @keyframes enablePaperClick {
+      to {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+
+    /* ========================================
+       ALBUM / TOUR
+    ======================================== */
+
+    .album-tour {
+      width: clamp(250px, 36vw, 460px);
+      max-width: 100%;
+      margin-bottom: 30px;
+    }
+
+    /* ========================================
+       COUNTDOWN
+    ======================================== */
+
+    .countdown {
+      width: clamp(270px, 40vw, 540px);
+      max-width: 100%;
+    }
+
+    /* ========================================
+       OPEN PAPER OVERLAY
+    ======================================== */
+
+    .paper-overlay {
+      position: fixed;
+      inset: 0;
+
+      z-index: 100;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 24px;
+
+      background:
+        rgba(255, 255, 255, 0.94);
+
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+
+      backdrop-filter: blur(0);
+      -webkit-backdrop-filter: blur(0);
+
+      transition:
+        opacity 420ms ease,
+        backdrop-filter 500ms ease,
+        -webkit-backdrop-filter 500ms ease,
+        visibility 0s linear 500ms;
+    }
+
+    .paper-overlay.visible {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+
+      transition:
+        opacity 420ms ease,
+        backdrop-filter 500ms ease,
+        -webkit-backdrop-filter 500ms ease,
+        visibility 0s;
+    }
+
+    .paper-dialog {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      opacity: 0;
+
+      transform:
+        translateY(14px)
+        scale(0.965);
+
+      transition:
+        transform
+        520ms
+        cubic-bezier(0.16, 0.82, 0.22, 1),
+        opacity
+        420ms
+        ease;
+    }
+
+    .paper-overlay.visible .paper-dialog {
+      opacity: 1;
+
+      transform:
+        translateY(0)
+        scale(1);
+    }
+
+    .open-paper {
+      width: min(84vw, 650px);
+      max-height: 78vh;
+
+      object-fit: contain;
+
+      filter:
+        drop-shadow(
+          0 18px 28px rgba(0, 0, 0, 0.12)
+        );
+    }
+
+    /* ========================================
+       RESET BUTTON
+    ======================================== */
+
+    .reset-button {
+      margin-top: 24px;
+      padding: 10px 24px;
+
+      border:
+        1px solid
+        rgba(17, 17, 17, 0.75);
+
+      border-radius: 999px;
+
+      background:
+        rgba(255, 255, 255, 0.9);
+
+      color: #111111;
+
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.17em;
+      text-transform: uppercase;
+
+      cursor: pointer;
+
+      transition:
+        background-color 180ms ease,
+        color 180ms ease,
+        transform 180ms ease,
+        border-color 180ms ease;
+    }
+
+    .reset-button:hover {
+      background: #111111;
+      color: #ffffff;
+      border-color: #111111;
+
+      transform: translateY(-1px);
+    }
+
+    .reset-button:active {
+      transform: translateY(0);
+    }
+
+    /* ========================================
+       TABLET
+    ======================================== */
+
+    @media (max-width: 760px) {
+      .page {
+        padding-top: 30px;
+      }
+
+      .logo {
+        margin-bottom: 26px;
+      }
+
+      .spill-stage {
+        width: 94vw;
+        height: 275px;
+      }
+
+      .container-stage {
+        left: 48px;
+        top: 28px;
+
+        width: 62px;
+      }
+
+      .surface-shadow {
+        width: 330px;
+        bottom: 35px;
+      }
+
+      .contents-reveal {
+        left: 136px;
+        top: 124px;
+
+        width: 399px;
+        height: 145px;
+
+        -webkit-mask-image:
+          linear-gradient(
+            to right,
+            transparent 0,
+            rgba(0, 0, 0, 0.18) 12px,
+            rgba(0, 0, 0, 0.55) 25px,
+            #000000 44px,
+            #000000 100%
+          );
+
+        mask-image:
+          linear-gradient(
+            to right,
+            transparent 0,
+            rgba(0, 0, 0, 0.18) 12px,
+            rgba(0, 0, 0, 0.55) 25px,
+            #000000 44px,
+            #000000 100%
+          );
+      }
+
+      .opening-shadow {
+        left: 15px;
+        top: 56px;
+
+        width: 40px;
+        height: 52px;
+      }
+
+      .wax-cylinder {
+        left: -25px;
+        top: 23px;
+
+        width: 180px;
+      }
+
+      .rolled-paper {
+        left: 48px;
+        top: 48px;
+
+        width: 110px;
+      }
+
+      .paper-click-target {
+        left: 348px;
+        top: 181px;
+
+        width: 120px;
+        height: 74px;
+      }
+
+      @keyframes containerFall {
+        0% {
+          transform:
+            translateX(0)
+            translateY(0)
+            rotate(0deg);
+        }
+
+        18% {
+          transform:
+            translateX(5px)
+            translateY(2px)
+            rotate(10deg);
+        }
+
+        100% {
+          transform:
+            translateX(38px)
+            translateY(98px)
+            rotate(84deg);
+        }
+      }
+
+      @keyframes lidFall {
+        0% {
+          transform:
+            translateX(-50%)
+            translateY(1%)
+            rotate(0deg);
+        }
+
+        18% {
+          transform:
+            translateX(-43%)
+            translateY(-6%)
+            rotate(-7deg);
+        }
+
+        100% {
+          transform:
+            translateX(86px)
+            translateY(130px)
+            rotate(28deg);
+        }
+      }
+
+      @keyframes waxEmerge {
+        0% {
+          opacity: 0;
+
+          transform:
+            translateX(0)
+            translateY(0)
+            rotate(-7deg)
+            scale(0.95);
+        }
+
+        15% {
+          opacity: 0.16;
+        }
+
+        35% {
+          opacity: 0.52;
+        }
+
+        60% {
+          opacity: 0.88;
+        }
+
+        100% {
+          opacity: 1;
+
+          transform:
+            translateX(110px)
+            translateY(24px)
+            rotate(6deg)
+            scale(1);
+        }
+      }
+
+      @keyframes paperEmerge {
+        0% {
+          opacity: 0;
+
+          transform:
+            translateX(0)
+            translateY(0)
+            rotate(-8deg)
+            scale(0.82);
+        }
+
+        15% {
+          opacity: 0.12;
+        }
+
+        35% {
+          opacity: 0.45;
+        }
+
+        60% {
+          opacity: 0.84;
+        }
+
+        100% {
+          opacity: 1;
+
+          transform:
+            translateX(165px)
+            translateY(17px)
+            rotate(9deg)
+            scale(1);
+        }
+      }
+    }
+
+    /* ========================================
+       MOBILE
+    ======================================== */
+
+    @media (max-width: 480px) {
+      .page {
+        padding:
+          26px
+          10px
+          45px;
+      }
+
+      .spill-stage {
+        width: 100%;
+        height: 245px;
+      }
+
+      .container-stage {
+        left: 18px;
+        top: 24px;
+
+        width: 54px;
+      }
+
+      .surface-shadow {
+        left: 44%;
+        bottom: 30px;
+
+        width: 260px;
+        height: 27px;
+      }
+
+      .contents-reveal {
+        left: 87px;
+        top: 106px;
+
+        width: calc(100% - 87px);
+        height: 132px;
+
+        -webkit-mask-image:
+          linear-gradient(
+            to right,
+            transparent 0,
+            rgba(0, 0, 0, 0.2) 9px,
+            rgba(0, 0, 0, 0.6) 19px,
+            #000000 34px,
+            #000000 100%
+          );
+
+        mask-image:
+          linear-gradient(
+            to right,
+            transparent 0,
+            rgba(0, 0, 0, 0.2) 9px,
+            rgba(0, 0, 0, 0.6) 19px,
+            #000000 34px,
+            #000000 100%
+          );
+      }
+
+      .opening-shadow {
+        left: 12px;
+        top: 48px;
+
+        width: 34px;
+        height: 45px;
+      }
+
+      .wax-cylinder {
+        left: -20px;
+        top: 20px;
+
+        width: 145px;
+      }
+
+      .rolled-paper {
+        left: 37px;
+        top: 43px;
+
+        width: 88px;
+      }
+
+      .paper-click-target {
+        left: 236px;
+        top: 155px;
+
+        width: 98px;
+        height: 65px;
+      }
+
+      @keyframes containerFall {
+        0% {
+          transform:
+            translateX(0)
+            translateY(0)
+            rotate(0deg);
+        }
+
+        18% {
+          transform:
+            translateX(4px)
+            translateY(2px)
+            rotate(10deg);
+        }
+
+        100% {
+          transform:
+            translateX(28px)
+            translateY(83px)
+            rotate(84deg);
+        }
+      }
+
+      @keyframes lidFall {
+        0% {
+          transform:
+            translateX(-50%)
+            translateY(1%)
+            rotate(0deg);
+        }
+
+        18% {
+          transform:
+            translateX(-43%)
+            translateY(-5%)
+            rotate(-7deg);
+        }
+
+        100% {
+          transform:
+            translateX(64px)
+            translateY(108px)
+            rotate(28deg);
+        }
+      }
+
+      @keyframes waxEmerge {
+        0% {
+          opacity: 0;
+
+          transform:
+            translateX(0)
+            translateY(0)
+            rotate(-7deg)
+            scale(0.95);
+        }
+
+        15% {
+          opacity: 0.16;
+        }
+
+        35% {
+          opacity: 0.52;
+        }
+
+        60% {
+          opacity: 0.88;
+        }
+
+        100% {
+          opacity: 1;
+
+          transform:
+            translateX(68px)
+            translateY(17px)
+            rotate(6deg)
+            scale(1);
+        }
+      }
+
+      @keyframes paperEmerge {
+        0% {
+          opacity: 0;
+
+          transform:
+            translateX(0)
+            translateY(0)
+            rotate(-8deg)
+            scale(0.82);
+        }
+
+        15% {
+          opacity: 0.12;
+        }
+
+        35% {
+          opacity: 0.45;
+        }
+
+        60% {
+          opacity: 0.84;
+        }
+
+        100% {
+          opacity: 1;
+
+          transform:
+            translateX(117px)
+            translateY(12px)
+            rotate(9deg)
+            scale(1);
+        }
+      }
+    }
+
+    /* ========================================
+       REDUCED MOTION
+    ======================================== */
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 1ms !important;
+        animation-delay: 0ms !important;
+        transition-duration: 1ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="page">
+
+    <div class="website-content">
+
+      <img
+        class="logo"
+        src="logo.png"
+        alt="Back to Us"
+      >
+
+      <section class="interactive-area">
+
+        <div
+          class="spill-stage"
+          id="spillStage"
+        >
+
+          <div
+            class="surface-shadow"
+            aria-hidden="true"
+          ></div>
+
+          <div
+            class="container-stage"
+            id="containerStage"
+            role="button"
+            tabindex="0"
+            aria-label="Open container"
+          >
+
+            <img
+              class="lid-image"
+              src="lid.png"
+              alt=""
+              draggable="false"
+            >
+
+            <img
+              class="container-image"
+              src="container.png"
+              alt="Container"
+              draggable="false"
+            >
+
+          </div>
+
+          <div
+            class="contents-reveal"
+            aria-hidden="true"
+          >
+
+            <div
+              class="opening-shadow"
+              aria-hidden="true"
+            ></div>
+
+            <img
+              class="wax-cylinder"
+              src="wax-cylinder.png"
+              alt=""
+              draggable="false"
+            >
+
+            <img
+              class="rolled-paper"
+              src="rolled-paper.png"
+              alt=""
+              draggable="false"
+            >
+
+          </div>
+
+          <button
+            class="paper-click-target"
+            id="paperClickTarget"
+            type="button"
+            aria-label="Open rolled paper"
+          ></button>
+
+        </div>
+
+      </section>
+
+      <img
+        class="album-tour"
+        src="album-tour.png"
+        alt="Album and tour"
+      >
+
+      <img
+        class="countdown"
+        src="countdown.png"
+        alt="Countdown"
+      >
+
+    </div>
+
+  </main>
+
+  <div
+    class="paper-overlay"
+    id="paperOverlay"
+    aria-hidden="true"
+  >
+
+    <div
+      class="paper-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Opened paper"
+    >
+
+      <img
+        class="open-paper"
+        src="open-paper.png"
+        alt="Opened paper"
+        draggable="false"
+      >
+
+      <button
+        class="reset-button"
+        id="resetButton"
+        type="button"
+      >
+        Reset
+      </button>
+
+    </div>
+
+  </div>
+
+  <script>
+    const spillStage =
+      document.getElementById("spillStage");
+
+    const containerStage =
+      document.getElementById("containerStage");
+
+    const paperClickTarget =
+      document.getElementById("paperClickTarget");
+
+    const paperOverlay =
+      document.getElementById("paperOverlay");
+
+    const resetButton =
+      document.getElementById("resetButton");
+
+    let containerOpened = false;
+    let contentsReady = false;
+    let contentsTimer = null;
+
+    function openContainer() {
+      if (containerOpened) {
+        return;
+      }
+
+      containerOpened = true;
+      contentsReady = false;
+
+      containerStage.classList.add("opened");
+      spillStage.classList.add("opened");
+
+      containerStage.setAttribute(
+        "aria-label",
+        "Container opened"
+      );
+
+      contentsTimer = window.setTimeout(() => {
+        contentsReady = true;
+      }, );
+    }
+
+    function showOpenPaper() {
+      if (
+        !containerOpened ||
+        !contentsReady
+      ) {
+        return;
+      }
+
+      paperOverlay.classList.add("visible");
+
+      paperOverlay.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+      window.setTimeout(() => {
+        resetButton.focus();
+      }, 480);
+    }
+
+    function resetWebsite() {
+      window.clearTimeout(contentsTimer);
+
+      paperOverlay.classList.remove("visible");
+
+      paperOverlay.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+      spillStage.classList.remove("opened");
+      containerStage.classList.remove("opened");
+
+      containerStage.setAttribute(
+        "aria-label",
+        "Open container"
+      );
+
+      containerOpened = false;
+      contentsReady = false;
+
+      window.setTimeout(() => {
+        containerStage.focus();
+      }, 450);
+    }
+
+    containerStage.addEventListener(
+      "click",
+      openContainer
+    );
+
+    containerStage.addEventListener(
+      "keydown",
+      function (event) {
+        if (
+          event.key === "Enter" ||
+          event.key === " "
+        ) {
+          event.preventDefault();
+          openContainer();
+        }
+      }
+    );
+
+    paperClickTarget.addEventListener(
+      "click",
+      showOpenPaper
+    );
+
+    resetButton.addEventListener(
+      "click",
+      resetWebsite
+    );
+
+    document.addEventListener(
+      "keydown",
+      function (event) {
+        if (
+          event.key === "Escape" &&
+          paperOverlay.classList.contains("visible")
+        ) {
+          resetWebsite();
+        }
+      }
+    );
+  </script>
+
+</body>
+</html>
